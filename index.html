@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Waste Heat Recovery ROI Calculator | Broad Air Conditioning</title>
+    <title>Intake Air Cooling from Generator Waste Heat Calculator | BROAD Air Conditioning</title>
     <style>
         * {
             margin: 0;
@@ -14,16 +14,17 @@
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: #e0e0e0;
-            background: #000000;
+            color: #1a1a1a;
+            background: #ffffff;
             min-height: 100vh;
             padding: 0;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            background: #000000;
+            background: #ffffff;
             position: relative;
         }
 
@@ -33,19 +34,9 @@
             left: 50px;
             font-size: 1.8em;
             font-weight: 900;
-            color: #ffffff;
+            color: #000000;
             z-index: 100;
             letter-spacing: 4px;
-            opacity: 0.95;
-        }
-
-        @media (max-width: 768px) {
-            .broad-logo {
-                font-size: 1.3em;
-                left: 20px;
-                top: 20px;
-                letter-spacing: 2px;
-            }
         }
 
         .language-toggle {
@@ -58,27 +49,19 @@
             gap: 12px;
         }
 
-        @media (max-width: 768px) {
-            .language-toggle {
-                right: 20px;
-                top: 25px;
-                gap: 8px;
-            }
-        }
-
         .toggle-switch {
             position: relative;
             width: 50px;
             height: 24px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.1);
             border-radius: 12px;
             cursor: pointer;
             transition: background 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(0,0,0,0.2);
         }
 
         .toggle-switch:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.15);
         }
 
         .toggle-slider {
@@ -87,10 +70,10 @@
             left: 2px;
             width: 18px;
             height: 18px;
-            background: white;
+            background: #000000;
             border-radius: 50%;
             transition: transform 0.3s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .toggle-switch.active .toggle-slider {
@@ -98,24 +81,18 @@
         }
 
         .lang-label {
-            color: rgba(255,255,255,0.6);
+            color: rgba(0,0,0,0.6);
             font-weight: 500;
             font-size: 0.85em;
             letter-spacing: 0.5px;
         }
 
         .header {
-            background: #000000;
-            color: white;
+            background: #ffffff;
+            color: #000000;
             padding: 120px 60px 60px 60px;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 80px 30px 40px 30px;
-            }
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
 
         .header h1 {
@@ -123,13 +100,6 @@
             margin-bottom: 15px;
             font-weight: 300;
             letter-spacing: 2px;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-                letter-spacing: 1px;
-            }
         }
 
         .header p {
@@ -141,10 +111,65 @@
             letter-spacing: 0.5px;
         }
 
+        .value-banner {
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 2px;
+            padding: 30px 40px;
+            margin: 40px 60px;
+            text-align: center;
+        }
+
+        .value-banner h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #000000;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .value-banner p {
+            font-size: 1.1em;
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .value-points {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .value-point {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .value-point h3 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #000000;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .value-point p {
+            font-size: 0.9em;
+            color: rgba(0,0,0,0.6);
+            line-height: 1.6;
+        }
+
         @media (max-width: 768px) {
-            .header p {
-                font-size: 0.9em;
-                padding: 0 10px;
+            .value-banner {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .value-points {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
         }
 
@@ -153,23 +178,15 @@
             justify-content: center;
             gap: 0;
             padding: 40px 60px;
-            background: #000000;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        @media (max-width: 768px) {
-            .mode-selector {
-                padding: 30px 20px;
-                gap: 0;
-                flex-wrap: wrap;
-            }
+            background: #ffffff;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
 
         .mode-btn {
             padding: 14px 35px;
             border: none;
             background: transparent;
-            color: rgba(255,255,255,0.5);
+            color: rgba(0,0,0,0.5);
             cursor: pointer;
             font-size: 0.9em;
             font-weight: 400;
@@ -178,21 +195,13 @@
             border-bottom: 2px solid transparent;
         }
 
-        @media (max-width: 768px) {
-            .mode-btn {
-                padding: 12px 20px;
-                font-size: 0.8em;
-                letter-spacing: 0.5px;
-            }
-        }
-
         .mode-btn:hover {
-            color: rgba(255,255,255,0.8);
+            color: rgba(0,0,0,0.8);
         }
 
         .mode-btn.active {
-            color: #ffffff;
-            border-bottom: 2px solid #ffffff;
+            color: #000000;
+            border-bottom: 2px solid #000000;
         }
 
         .content {
@@ -209,7 +218,7 @@
             
             .input-section {
                 border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
+                border-bottom: 1px solid rgba(0,0,0,0.08);
                 max-height: none;
             }
         }
@@ -244,13 +253,13 @@
             
             .mode-btn {
                 padding: 12px 20px;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
+                border-bottom: 1px solid rgba(0,0,0,0.05);
                 text-align: left;
             }
             
             .mode-btn.active {
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-                border-left: 3px solid #ffffff;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                border-left: 3px solid #000000;
             }
             
             .input-section, .results-section {
@@ -259,51 +268,28 @@
         }
 
         .input-section {
-            background: #000000;
+            background: #ffffff;
             padding: 50px;
-            border-right: 1px solid rgba(255,255,255,0.08);
+            border-right: 1px solid rgba(0,0,0,0.08);
             overflow-y: auto;
             max-height: calc(100vh - 400px);
         }
 
-        @media (max-width: 1024px) {
-            .input-section {
-                border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
-                max-height: none;
-                padding: 40px 30px;
-            }
-        }
-
         .results-section {
-            background: #000000;
+            background: #ffffff;
             padding: 50px;
             overflow-y: auto;
-        }
-
-        @media (max-width: 1024px) {
-            .results-section {
-                padding: 40px 30px;
-            }
         }
 
         .section-title {
             font-size: 1.3em;
             margin-bottom: 35px;
-            color: #ffffff;
+            color: #000000;
             font-weight: 300;
             letter-spacing: 2px;
             text-transform: uppercase;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 1.1em;
-                margin-bottom: 25px;
-                letter-spacing: 1px;
-            }
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
 
         .input-group {
@@ -314,7 +300,7 @@
             display: block;
             margin-bottom: 10px;
             font-weight: 400;
-            color: rgba(255,255,255,0.8);
+            color: rgba(0,0,0,0.8);
             font-size: 0.9em;
             letter-spacing: 0.5px;
         }
@@ -322,9 +308,9 @@
         .input-group input, .input-group select {
             width: 100%;
             padding: 14px 16px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.03);
-            color: #ffffff;
+            border: 1px solid rgba(0,0,0,0.15);
+            background: rgba(0,0,0,0.02);
+            color: #000000;
             border-radius: 2px;
             font-size: 0.95em;
             transition: all 0.3s ease;
@@ -333,37 +319,370 @@
 
         .input-group input:focus, .input-group select:focus {
             outline: none;
-            border-color: rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.05);
+            border-color: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.04);
         }
 
         .input-group .hint {
             font-size: 0.8em;
-            color: rgba(255,255,255,0.4);
+            color: rgba(0,0,0,0.4);
             margin-top: 6px;
             font-weight: 300;
             letter-spacing: 0.3px;
         }
 
-        .advanced-section {
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.08);
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 2px;
+            font-size: 0.95em;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
+        .calculate-btn:hover {
+            background: rgba(0,0,0,0.85);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Circular Diagram */
+        .system-diagram {
+            margin-top: 50px;
+            padding: 50px;
+            background: #ffffff;
+            border-radius: 2px;
+            border: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            color: #000000;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .diagram-container {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 2px;
+            overflow: visible;
+        }
+
+        /* Circular layout - components positioned in circle */
+        .component {
+            position: absolute;
+            background: rgba(0,0,0,0.02);
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 4px;
+            padding: 25px;
+            z-index: 2;
+            transition: all 0.3s ease;
+            width: 220px;
+        }
+
+        .component:hover {
+            background: rgba(0,0,0,0.04);
+            border-color: rgba(0,0,0,0.4);
+            transform: scale(1.05);
+        }
+
+        .component-title {
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            color: #000000;
+        }
+
+        .component-value {
+            font-size: 1.6em;
+            font-weight: 300;
+            color: #000000;
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .component-label {
+            font-size: 0.7em;
+            color: rgba(0,0,0,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        /* Circular positions */
+        .intake-cooling {
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .generator {
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+        }
+
+        .waste-heat {
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .absorption-chiller {
+            top: 50%;
+            right: 50px;
+            transform: translateY(-50%);
+        }
+
+        /* Animations */
+        .turbine-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 10px auto;
+            border: 3px solid rgba(0,0,0,0.3);
+            border-radius: 50%;
+            position: relative;
+            animation: spin 4s linear infinite;
+        }
+
+        .turbine-icon::before,
+        .turbine-icon::after {
+            content: '';
+            position: absolute;
+            background: rgba(0,0,0,0.4);
+            top: 50%;
+            left: 50%;
+        }
+
+        .turbine-icon::before {
+            width: 40px;
+            height: 2px;
+            transform: translate(-50%, -50%);
+        }
+
+        .turbine-icon::after {
+            width: 2px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .heat-particles {
+            position: relative;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .heat-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #000000;
+            border-radius: 50%;
+            opacity: 0;
+            animation: rise 3s ease-in infinite;
+        }
+
+        .heat-particle:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .heat-particle:nth-child(2) { left: 40%; animation-delay: 0.6s; }
+        .heat-particle:nth-child(3) { left: 60%; animation-delay: 1.2s; }
+        .heat-particle:nth-child(4) { left: 80%; animation-delay: 1.8s; }
+
+        @keyframes rise {
+            0% { bottom: 0; opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { bottom: 40px; opacity: 0; }
+        }
+
+        .cooling-waves {
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        .cooling-wave {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.3), transparent);
+            opacity: 0;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .cooling-wave:nth-child(1) { top: 8px; animation-delay: 0s; }
+        .cooling-wave:nth-child(2) { top: 16px; animation-delay: 0.5s; }
+        .cooling-wave:nth-child(3) { top: 24px; animation-delay: 1s; }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(-100%); opacity: 0; }
+            50% { transform: translateX(0); opacity: 1; }
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #000000;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.2); }
+        }
+
+        /* SVG Flows - Circular with large arrows */
+        .flow-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes flowDash {
+            to {
+                stroke-dashoffset: -60;
+            }
+        }
+
+        .flow-path {
+            stroke-width: 4;
+            fill: none;
+            stroke: rgba(0,0,0,0.4);
+            stroke-dasharray: 15 10;
+            animation: flowDash 3s linear infinite;
+        }
+
+        .flow-label {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            border: 2px solid rgba(0,0,0,0.2);
+            padding: 8px 14px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: #000000;
+            letter-spacing: 0.5px;
+            font-family: 'Courier New', monospace;
+            z-index: 3;
+        }
+
+        /* Efficiency badge center */
+        .efficiency-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.98);
+            border: 3px solid rgba(0,0,0,0.3);
+            border-radius: 4px;
+            padding: 35px 45px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .efficiency-title {
+            font-size: 0.9em;
+            color: rgba(0,0,0,0.6);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .efficiency-value {
+            font-size: 4em;
+            font-weight: 200;
+            color: #000000;
+            letter-spacing: 2px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .system-diagram {
+                padding: 20px 10px;
+            }
+
+            .diagram-container {
+                height: 1000px;
+            }
+
+            .component {
+                width: 180px;
+                padding: 20px;
+            }
+
+            .intake-cooling {
+                top: 30px;
+            }
+
+            .generator {
+                top: 280px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .waste-heat {
+                top: 530px;
+                bottom: auto;
+            }
+
+            .absorption-chiller {
+                top: 780px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+            }
+
+            .efficiency-badge {
+                padding: 25px 30px;
+            }
+
+            .efficiency-value {
+                font-size: 3em;
+            }
+
+            .flow-path {
+                opacity: 0.3;
+            }
+        }
+
+        /* Results styling */
         .results-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.1);
             padding: 40px;
             border-radius: 2px;
             margin-bottom: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .results-card {
-                padding: 25px 20px;
-                margin-bottom: 20px;
-            }
         }
 
         .results-card h3 {
@@ -373,12 +692,6 @@
             font-weight: 300;
             letter-spacing: 1px;
             text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) {
-            .results-card h3 {
-                font-size: 0.85em;
-            }
         }
 
         .big-number {
@@ -400,13 +713,6 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .big-number {
-                font-size: 2.5em;
-                letter-spacing: 1px;
-            }
-        }
-
         .metric-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -421,24 +727,11 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .metric-grid {
-                gap: 15px;
-                grid-template-columns: 1fr;
-            }
-        }
-
         .metric {
-            background: rgba(255,255,255,0.02);
+            background: rgba(0,0,0,0.02);
             padding: 25px;
             border-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        @media (max-width: 768px) {
-            .metric {
-                padding: 18px;
-            }
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .metric-label {
@@ -454,25 +747,19 @@
             letter-spacing: 1px;
         }
 
-        @media (max-width: 768px) {
-            .metric-value {
-                font-size: 1.5em;
-            }
-        }
-
         .details-table {
-            background: rgba(255,255,255,0.02);
+            background: rgba(0,0,0,0.02);
             border-radius: 2px;
             overflow: hidden;
             margin-top: 30px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(0,0,0,0.08);
         }
 
         .details-row {
             display: flex;
             justify-content: space-between;
             padding: 18px 25px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .details-row:last-child {
@@ -481,801 +768,74 @@
 
         .details-label {
             font-weight: 300;
-            color: rgba(255,255,255,0.6);
+            color: rgba(0,0,0,0.6);
             letter-spacing: 0.5px;
         }
 
         .details-value {
             font-weight: 400;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-        }
-
-        .chart-container {
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .bar-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .bar-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .bar-label {
-            min-width: 120px;
-            font-weight: 300;
-            font-size: 0.9em;
-            color: rgba(255,255,255,0.7);
-            letter-spacing: 0.5px;
-        }
-
-        .bar-visual {
-            flex: 1;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            background: #ffffff;
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-
-        .bar-value {
-            position: absolute;
-            right: -60px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: white;
-            font-weight: 300;
-            font-size: 0.9em;
-            letter-spacing: 0.5px;
-        }
-
-        .calculate-btn {
-            width: 100%;
-            padding: 16px;
-            background: #ffffff;
             color: #000000;
-            border: none;
-            border-radius: 2px;
-            font-size: 0.95em;
-            font-weight: 500;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .calculate-btn:hover {
-            background: rgba(255,255,255,0.9);
-        }
-
-        .comparison-section {
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(255,255,255,0.02);
-            border-left: 2px solid rgba(255,255,255,0.2);
-            border-radius: 2px;
-        }
-
-        .comparison-section h4 {
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .info-box {
-            background: rgba(255,255,255,0.03);
-            border-left: 2px solid rgba(255,255,255,0.3);
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 2px;
-        }
-
-        .info-box strong {
-            color: #ffffff;
-            font-weight: 400;
-        }
-
-        .scenario-tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .scenario-tab {
-            padding: 12px 25px;
-            background: transparent;
-            border: none;
-            color: rgba(255,255,255,0.5);
-            cursor: pointer;
-            font-weight: 300;
-            transition: all 0.3s ease;
             letter-spacing: 0.5px;
-            border-bottom: 2px solid transparent;
         }
 
-        .scenario-tab.active {
-            color: white;
-            border-bottom: 2px solid white;
-        }
-
-        .cash-flow-chart {
-            margin-top: 30px;
-            padding: 30px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .system-diagram {
-            margin-top: 50px;
-            padding: 50px;
-            background: #000000;
-            border-radius: 2px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .diagram-container {
-            position: relative;
-            width: 100%;
-            height: 650px;
-            background: #000000;
+        .cta-section {
+            background: rgba(0,0,0,0.03);
+            border: 2px solid rgba(0,0,0,0.2);
             border-radius: 2px;
             padding: 40px;
-            overflow: visible;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* Tablet responsive */
-        @media (max-width: 1024px) {
-            .system-diagram {
-                padding: 30px 20px;
-            }
-            
-            .diagram-container {
-                height: 700px;
-            }
-        }
-
-        /* Mobile responsive - stack components vertically */
-        @media (max-width: 768px) {
-            .system-diagram {
-                padding: 20px 10px;
-                margin-top: 30px;
-            }
-            
-            .diagram-container {
-                height: auto;
-                min-height: 900px;
-                padding: 10px;
-            }
-            
-            /* Reposition all components for vertical mobile layout */
-            .intake-cooling {
-                width: 160px !important;
-                height: 120px !important;
-                top: 30px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-            }
-            
-            .generator {
-                width: 180px !important;
-                height: 180px !important;
-                top: 220px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-            }
-            
-            .waste-heat {
-                width: 160px !important;
-                height: 110px !important;
-                top: 440px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                bottom: auto !important;
-            }
-            
-            .absorption-chiller {
-                width: 200px !important;
-                height: 250px !important;
-                top: 600px !important;
-                left: 50% !important;
-                right: auto !important;
-                transform: translateX(-50%) !important;
-            }
-            
-            .efficiency-badge {
-                top: 75% !important;
-                padding: 20px 25px;
-            }
-            
-            .efficiency-badge-value {
-                font-size: 2.5em;
-            }
-            
-            /* Adjust labels for mobile */
-            .flow-label {
-                font-size: 0.65em !important;
-                padding: 5px 8px !important;
-            }
-            
-            .component-label {
-                font-size: 0.75em;
-                top: -25px;
-            }
-            
-            .component-stats {
-                font-size: 0.75em;
-                padding: 8px;
-            }
-        }
-
-        /* Small mobile */
-        @media (max-width: 480px) {
-            .diagram-container {
-                min-height: 950px;
-            }
-            
-            .intake-cooling {
-                width: 140px !important;
-                height: 100px !important;
-            }
-            
-            .generator {
-                width: 150px !important;
-                height: 150px !important;
-            }
-            
-            .waste-heat {
-                width: 140px !important;
-                height: 100px !important;
-            }
-            
-            .absorption-chiller {
-                width: 170px !important;
-                height: 220px !important;
-            }
-            
-            .component-label {
-                font-size: 0.7em;
-            }
-            
-            .component-stats {
-                font-size: 0.7em;
-                padding: 6px;
-            }
-            
-            .stat-row {
-                margin: 2px 0;
-            }
-        }
-            .diagram-container {
-                height: 900px;
-                padding: 20px;
-                overflow-x: hidden;
-            }
-        }
-
-        .component {
-            position: absolute;
-            transition: all 0.3s ease;
-        }
-
-        /* Generator shape - technical schematic style */
-        .generator {
-            width: 220px;
-            height: 220px;
-            top: 250px;
-            left: 120px;
-        }
-
-        @media (max-width: 768px) {
-            .generator {
-                width: 160px;
-                height: 160px;
-                top: 500px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-
-        .generator-body {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .generator-fan {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            animation: rotate 4s linear infinite;
-        }
-
-        @media (max-width: 768px) {
-            .generator-fan {
-                width: 70px;
-                height: 70px;
-            }
-        }
-
-        .generator-fan::before,
-        .generator-fan::after {
-            content: '';
-            position: absolute;
-            background: rgba(255,255,255,0.3);
-            top: 50%;
-            left: 50%;
-        }
-
-        .generator-fan::before {
-            width: 80px;
-            height: 1px;
-            transform: translate(-50%, -50%);
-        }
-
-        @media (max-width: 768px) {
-            .generator-fan::before {
-                width: 55px;
-            }
-        }
-
-        .generator-fan::after {
-            width: 1px;
-            height: 80px;
-            transform: translate(-50%, -50%);
-        }
-
-        @media (max-width: 768px) {
-            .generator-fan::after {
-                height: 55px;
-            }
-        }
-
-        .generator-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 8px;
-            height: 8px;
-            background: #00ff00;
-            border-radius: 50%;
-            animation: blink 2s ease-in-out infinite;
-            box-shadow: 0 0 10px #00ff00;
-        }
-
-        @keyframes rotate {
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* Absorption Chiller - technical schematic */
-        .absorption-chiller {
-            width: 240px;
-            height: 300px;
-            top: 200px;
-            right: 100px;
-        }
-
-        @media (max-width: 768px) {
-            .absorption-chiller {
-                width: 180px;
-                height: 220px;
-                top: 240px;
-                left: 50%;
-                right: auto;
-                transform: translateX(-50%);
-            }
-        }
-
-        .chiller-body {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chiller-coils {
-            position: absolute;
-            width: 100%;
-            height: 60%;
-            top: 20%;
-            left: 0;
-        }
-
-        .coil-line {
-            position: absolute;
-            width: 90%;
-            left: 5%;
-            height: 1px;
-            background: rgba(255,255,255,0.2);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .coil-line:nth-child(1) { top: 15%; animation-delay: 0s; }
-        .coil-line:nth-child(2) { top: 35%; animation-delay: 0.3s; }
-        .coil-line:nth-child(3) { top: 55%; animation-delay: 0.6s; }
-        .coil-line:nth-child(4) { top: 75%; animation-delay: 0.9s; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.6; }
-        }
-
-        .chiller-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 8px;
-            height: 8px;
-            background: #00ccff;
-            border-radius: 50%;
-            animation: blink 2s ease-in-out infinite;
-            box-shadow: 0 0 10px #00ccff;
-        }
-
-        /* Intake cooling unit - technical */
-        .intake-cooling {
-            width: 200px;
-            height: 150px;
-            top: 30px;
-            left: 120px;
-        }
-
-        @media (max-width: 768px) {
-            .intake-cooling {
-                width: 160px;
-                height: 120px;
-                top: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-
-        .intake-body {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cold-waves {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .wave {
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            background: rgba(255,255,255,0.15);
-            animation: wave 3s ease-in-out infinite;
-        }
-
-        .wave:nth-child(1) { top: 25%; animation-delay: 0s; }
-        .wave:nth-child(2) { top: 50%; animation-delay: 0.5s; }
-        .wave:nth-child(3) { top: 75%; animation-delay: 1s; }
-
-        @keyframes wave {
-            0%, 100% { transform: translateX(-100%); opacity: 0; }
-            50% { transform: translateX(0%); opacity: 0.3; }
-        }
-
-        /* Waste heat collector - technical */
-        .waste-heat {
-            width: 180px;
-            height: 130px;
-            bottom: 100px;
-            left: 140px;
-        }
-
-        @media (max-width: 768px) {
-            .waste-heat {
-                width: 150px;
-                height: 110px;
-                bottom: 60px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-
-        .waste-heat-body {
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .heat-waves {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .heat-particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255,255,255,0.6);
-            border-radius: 50%;
-            animation: rise 2s ease-in infinite;
-        }
-
-        .heat-particle:nth-child(1) { left: 20%; animation-delay: 0s; }
-        .heat-particle:nth-child(2) { left: 40%; animation-delay: 0.4s; }
-        .heat-particle:nth-child(3) { left: 60%; animation-delay: 0.8s; }
-        .heat-particle:nth-child(4) { left: 80%; animation-delay: 1.2s; }
-
-        @keyframes rise {
-            0% { bottom: 10%; opacity: 0.8; }
-            100% { bottom: 90%; opacity: 0; }
-        }
-
-        .component-label {
-            position: absolute;
-            top: -30px;
-            left: 0;
-            width: 100%;
-            text-align: left;
-            color: rgba(255,255,255,0.9);
-            font-weight: 300;
-            font-size: 0.85em;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) {
-            .component-label {
-                font-size: 0.7em;
-                top: -25px;
-            }
-        }
-
-        .component-stats {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
-            padding: 12px;
-            border-radius: 2px;
-            font-size: 0.8em;
-            color: rgba(255,255,255,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        @media (max-width: 768px) {
-            .component-stats {
-                font-size: 0.7em;
-                padding: 8px;
-            }
-        }
-
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 4px 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        @media (max-width: 768px) {
-            .stat-row {
-                margin: 2px 0;
-            }
-        }
-
-        .stat-label {
-            font-weight: 400;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .stat-value {
-            font-weight: 400;
-            color: #ffffff;
-        }
-
-        .flow-arrow {
-            position: absolute;
-            fill: none;
-            filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
-        }
-
-        @media (max-width: 768px) {
-            .flow-arrow {
-                display: none;
-            }
-        }
-
-        .flow-label {
-            position: absolute;
-            background: rgba(0,0,0,0.9);
-            padding: 8px 12px;
-            border-radius: 2px;
-            font-size: 0.75em;
-            font-weight: 300;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            white-space: nowrap;
-            z-index: 5;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.9);
-            letter-spacing: 0.5px;
-            font-family: 'Courier New', monospace;
-        }
-
-        @media (max-width: 768px) {
-            .flow-label {
-                display: none;
-            }
-        }
-
-        .energy-flow {
-            stroke: rgba(255,100,100,0.6);
-            stroke-width: 2;
-            stroke-dasharray: 8, 4;
-            animation: flowEnergy 2s linear infinite;
-        }
-
-        .cooling-flow {
-            stroke: rgba(100,200,255,0.6);
-            stroke-width: 2;
-            stroke-dasharray: 8, 4;
-            animation: flowCooling 2s linear infinite;
-        }
-
-        .air-flow {
-            stroke: rgba(200,200,200,0.6);
-            stroke-width: 2;
-            stroke-dasharray: 8, 4;
-            animation: flowAir 2s linear infinite;
-        }
-
-        @keyframes flowEnergy {
-            to { stroke-dashoffset: -12; }
-        }
-
-        @keyframes flowCooling {
-            to { stroke-dashoffset: 12; }
-        }
-
-        @keyframes flowAir {
-            to { stroke-dashoffset: -12; }
-        }
-
-        .legend {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        @media (max-width: 768px) {
-            .legend {
-                gap: 15px;
-                margin-top: 20px;
-            }
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85em;
-            color: rgba(255,255,255,0.7);
-            letter-spacing: 0.5px;
-        }
-
-        @media (max-width: 768px) {
-            .legend-item {
-                font-size: 0.75em;
-                gap: 8px;
-            }
-        }
-
-        .legend-line {
-            width: 35px;
-            height: 2px;
-            border-radius: 1px;
-        }
-
-        @media (max-width: 768px) {
-            .legend-line {
-                width: 25px;
-            }
-        }
-
-        .efficiency-badge {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.9);
-            padding: 25px 35px;
-            border-radius: 2px;
+            margin: 40px 0;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        @media (max-width: 768px) {
-            .efficiency-badge {
-                top: 700px;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 20px 30px;
-            }
+        .cta-section h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            color: #000000;
+            font-weight: 400;
         }
 
-        .efficiency-badge-title {
-            font-size: 0.8em;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        .cta-section p {
+            font-size: 1.1em;
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 25px;
+            line-height: 1.8;
         }
 
-        @media (max-width: 768px) {
-            .efficiency-badge-title {
-                font-size: 0.7em;
-            }
-        }
-
-        .efficiency-badge-value {
-            font-size: 3em;
-            font-weight: 200;
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: #000000;
             color: #ffffff;
-            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .cta-button:hover {
+            background: rgba(0,0,0,0.85);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: #000000;
+            border: 2px solid #000000;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(0,0,0,0.05);
         }
 
         @media (max-width: 768px) {
-            .efficiency-badge-value {
-                font-size: 2.5em;
+            .cta-section {
+                padding: 25px 20px;
             }
         }
     </style>
@@ -1291,8 +851,28 @@
                 </div>
                 <span class="lang-label" id="lang-label-zh">中文</span>
             </div>
-            <h1 data-en="Waste Heat Recovery ROI Calculator" data-zh="余热回收投资回报计算器">余热回收投资回报计算器</h1>
-            <p data-en="Maximize power generation efficiency through intake air cooling with absorption chiller technology" data-zh="通过吸收式制冷机进气冷却技术最大化发电效率">通过吸收式制冷机进气冷却技术最大化发电效率</p>
+            <h1 data-en="Intake Air Cooling from Generator Waste Heat Calculator" data-zh="发电机余热进气冷却计算器">发电机余热进气冷却计算器</h1>
+            <p data-en="Calculate power generation efficiency gains with BROAD absorption chiller technology. We invest, you benefit - no upfront capital required." data-zh="使用BROAD吸收式制冷技术计算发电效率提升。我们投资，您受益——无需前期资金。">使用BROAD吸收式制冷技术计算发电效率提升。我们投资，您受益——无需前期资金。</p>
+        </div>
+
+        <div class="value-banner">
+            <h2 data-en="BROAD Energy Performance Partnership" data-zh="BROAD 能源绩效合作">BROAD 能源绩效合作</h2>
+            <p data-en="Transform your power generation with zero upfront cost. BROAD provides capital, equipment, and installation. We share in efficiency gains through revenue sharing model." data-zh="零前期成本改造您的发电系统。BROAD提供资金、设备和安装。我们通过收益分享模式共享效率提升。">零前期成本改造您的发电系统。BROAD提供资金、设备和安装。我们通过收益分享模式共享效率提升。</p>
+            
+            <div class="value-points">
+                <div class="value-point">
+                    <h3 data-en="BROAD Invests" data-zh="BROAD 投资">BROAD 投资</h3>
+                    <p data-en="100% capital for equipment and installation. No upfront investment from you." data-zh="100%设备和安装资金。您无需前期投资。">100%设备和安装资金。您无需前期投资。</p>
+                </div>
+                <div class="value-point">
+                    <h3 data-en="You Gain Efficiency" data-zh="您获得效率">您获得效率</h3>
+                    <p data-en="Up to 22% power output increase using proven absorption chiller technology." data-zh="使用成熟的吸收式制冷技术实现高达22%功率提升。">使用成熟的吸收式制冷技术实现高达22%功率提升。</p>
+                </div>
+                <div class="value-point">
+                    <h3 data-en="Shared Benefits" data-zh="共享收益">共享收益</h3>
+                    <p data-en="Revenue sharing from enhanced power generation. Win-win partnership." data-zh="分享发电增长收入。双赢合作。">分享发电增长收入。双赢合作。</p>
+                </div>
+            </div>
         </div>
 
         <div class="mode-selector">
@@ -1300,16 +880,12 @@
                     data-en="Quick Analysis" data-zh="快速分析">快速分析</button>
             <button class="mode-btn" onclick="switchMode('detailed')" 
                     data-en="Detailed Engineering" data-zh="详细工程分析">详细工程分析</button>
-            <button class="mode-btn" onclick="switchMode('comparison')" 
-                    data-en="Scenario Comparison" data-zh="方案对比">方案对比</button>
         </div>
 
         <div class="content">
-            <!-- INPUT SECTION -->
             <div class="input-section">
                 <h2 class="section-title" data-en="System Parameters" data-zh="系统参数">系统参数</h2>
 
-                <!-- SIMPLE MODE INPUTS -->
                 <div id="simple-inputs">
                     <div class="input-group">
                         <label data-en="Generator Capacity (MW)" data-zh="发电机容量 (MW)">发电机容量 (MW)</label>
@@ -1320,10 +896,10 @@
                     <div class="input-group">
                         <label data-en="Location / Climate Zone" data-zh="位置 / 气候区">位置 / 气候区</label>
                         <select id="climate">
-                            <option value="hot-humid" data-en="Hot & Humid (e.g., Houston, Singapore)" data-zh="炎热潮湿 (如：休斯顿，新加坡)">炎热潮湿 (如：休斯顿，新加坡)</option>
-                            <option value="hot-dry" data-en="Hot & Dry (e.g., Phoenix, Dubai)" data-zh="炎热干燥 (如：凤凰城，迪拜)">炎热干燥 (如：凤凰城，迪拜)</option>
-                            <option value="temperate" data-en="Temperate (e.g., San Francisco, London)" data-zh="温和 (如：旧金山，伦敦)">温和 (如：旧金山，伦敦)</option>
-                            <option value="cold" data-en="Cold (e.g., Chicago, Moscow)" data-zh="寒冷 (如：芝加哥，莫斯科)">寒冷 (如：芝加哥，莫斯科)</option>
+                            <option value="hot-humid" data-en="Hot & Humid" data-zh="炎热潮湿">炎热潮湿</option>
+                            <option value="hot-dry" data-en="Hot & Dry" data-zh="炎热干燥">炎热干燥</option>
+                            <option value="temperate" data-en="Temperate" data-zh="温和">温和</option>
+                            <option value="cold" data-en="Cold" data-zh="寒冷">寒冷</option>
                         </select>
                     </div>
 
@@ -1340,164 +916,20 @@
                     </div>
                 </div>
 
-                <!-- DETAILED MODE INPUTS -->
                 <div id="detailed-inputs" class="hidden">
                     <div class="input-group">
-                        <label>Generator Capacity (MW)</label>
-                        <input type="number" id="capacity-detail" value="10" min="0.5" step="0.5">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Generator Type</label>
-                        <select id="generator-type">
-                            <option value="gas-turbine">Gas Turbine</option>
-                            <option value="reciprocating">Reciprocating Engine</option>
-                            <option value="combined-cycle">Combined Cycle</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Ambient Design Temperature (°C)</label>
+                        <label data-en="Ambient Temperature (°C)" data-zh="环境温度 (°C)">环境温度 (°C)</label>
                         <input type="number" id="ambient-temp" value="35" min="0" max="50">
                     </div>
 
                     <div class="input-group">
-                        <label>Target Intake Temperature (°C)</label>
+                        <label data-en="Target Intake Temperature (°C)" data-zh="目标进气温度 (°C)">目标进气温度 (°C)</label>
                         <input type="number" id="target-temp" value="15" min="5" max="25">
                     </div>
 
                     <div class="input-group">
-                        <label>Power Gain per °C Reduction (%)</label>
+                        <label data-en="Power Gain Rate (%/°C)" data-zh="功率增益率 (%/°C)">功率增益率 (%/°C)</label>
                         <input type="number" id="power-gain-rate" value="0.6" min="0.1" max="2" step="0.1">
-                        <div class="hint">Typical: 0.4-0.8% for gas turbines</div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Exhaust Temperature (°C)</label>
-                        <input type="number" id="exhaust-temp" value="450" min="100" max="600">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Annual Operating Hours</label>
-                        <input type="number" id="operating-hours-detail" value="7000" min="100" max="8760">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Capacity Factor (%)</label>
-                        <input type="number" id="capacity-factor" value="85" min="10" max="100">
-                        <div class="hint">Average load as % of nameplate</div>
-                    </div>
-
-                    <div class="advanced-section">
-                        <h3 style="margin-bottom: 20px; color: #1e3c72;">Financial Parameters</h3>
-                        
-                        <div class="input-group">
-                            <label>Electricity Price ($/kWh)</label>
-                            <input type="number" id="electricity-price-detail" value="0.12" min="0.01" step="0.01">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Annual Price Escalation (%)</label>
-                            <input type="number" id="price-escalation" value="2.5" min="0" max="10" step="0.1">
-                        </div>
-
-                        <div class="input-group">
-                            <label>System Capital Cost ($/kW cooling)</label>
-                            <input type="number" id="capital-cost" value="800" min="200" max="2000">
-                            <div class="hint">Includes chiller, integration, installation</div>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Annual O&M Cost (% of capex)</label>
-                            <input type="number" id="om-cost" value="2" min="0.5" max="10" step="0.5">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Discount Rate (%)</label>
-                            <input type="number" id="discount-rate" value="8" min="1" max="20" step="0.5">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Analysis Period (years)</label>
-                            <input type="number" id="analysis-period" value="20" min="5" max="30">
-                        </div>
-
-                        <div class="input-group">
-                            <label>Available Incentives ($)</label>
-                            <input type="number" id="incentives" value="0" min="0" step="1000">
-                            <div class="hint">Rebates, tax credits, grants</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- COMPARISON MODE -->
-                <div id="comparison-inputs" class="hidden">
-                    <div class="info-box">
-                        <strong>Scenario Comparison Mode</strong><br>
-                        Compare multiple system configurations side-by-side. Adjust parameters for each scenario to see which delivers the best return.
-                    </div>
-                    
-                    <div class="scenario-tabs">
-                        <button class="scenario-tab active" onclick="switchScenario(1)">Scenario 1</button>
-                        <button class="scenario-tab" onclick="switchScenario(2)">Scenario 2</button>
-                        <button class="scenario-tab" onclick="switchScenario(3)">Scenario 3</button>
-                    </div>
-
-                    <div id="scenario-1" class="scenario-content">
-                        <div class="input-group">
-                            <label>Scenario Name</label>
-                            <input type="text" id="scenario-1-name" value="Base Case">
-                        </div>
-                        <div class="input-group">
-                            <label>Generator Capacity (MW)</label>
-                            <input type="number" id="scenario-1-capacity" value="10" min="0.5" step="0.5">
-                        </div>
-                        <div class="input-group">
-                            <label>Temperature Reduction (°C)</label>
-                            <input type="number" id="scenario-1-temp-reduction" value="20" min="5" max="30">
-                        </div>
-                        <div class="input-group">
-                            <label>Capital Cost ($M)</label>
-                            <input type="number" id="scenario-1-capex" value="2.5" min="0.1" step="0.1">
-                        </div>
-                    </div>
-
-                    <div id="scenario-2" class="scenario-content hidden">
-                        <div class="input-group">
-                            <label>Scenario Name</label>
-                            <input type="text" id="scenario-2-name" value="Optimized">
-                        </div>
-                        <div class="input-group">
-                            <label>Generator Capacity (MW)</label>
-                            <input type="number" id="scenario-2-capacity" value="15" min="0.5" step="0.5">
-                        </div>
-                        <div class="input-group">
-                            <label>Temperature Reduction (°C)</label>
-                            <input type="number" id="scenario-2-temp-reduction" value="25" min="5" max="30">
-                        </div>
-                        <div class="input-group">
-                            <label>Capital Cost ($M)</label>
-                            <input type="number" id="scenario-2-capex" value="3.2" min="0.1" step="0.1">
-                        </div>
-                    </div>
-
-                    <div id="scenario-3" class="scenario-content hidden">
-                        <div class="input-group">
-                            <label>Scenario Name</label>
-                            <input type="text" id="scenario-3-name" value="Conservative">
-                        </div>
-                        <div class="input-group">
-                            <label>Generator Capacity (MW)</label>
-                            <input type="number" id="scenario-3-capacity" value="10" min="0.5" step="0.5">
-                        </div>
-                        <div class="input-group">
-                            <label>Temperature Reduction (°C)</label>
-                            <input type="number" id="scenario-3-temp-reduction" value="15" min="5" max="30">
-                        </div>
-                        <div class="input-group">
-                            <label>Capital Cost ($M)</label>
-                            <input type="number" id="scenario-3-capex" value="2.0" min="0.1" step="0.1">
-                        </div>
                     </div>
                 </div>
 
@@ -1505,191 +937,114 @@
                         data-en="Calculate ROI" data-zh="计算投资回报">计算投资回报</button>
             </div>
 
-            <!-- RESULTS SECTION -->
             <div class="results-section">
                 <h2 class="section-title" data-en="Financial Analysis" data-zh="财务分析">财务分析</h2>
                 
-                <!-- SYSTEM DIAGRAM -->
+                <div style="background: rgba(0,0,0,0.03); border-left: 3px solid #000000; padding: 20px; margin-bottom: 30px; border-radius: 2px;">
+                    <p style="margin: 0; font-size: 0.95em; line-height: 1.6;" data-en="<strong>BROAD Partnership Model:</strong> Zero upfront investment. BROAD provides all capital and shares in efficiency gains. You retain significant revenue while we handle installation, maintenance, and performance guarantee." data-zh="<strong>BROAD合作模式：</strong>零前期投资。BROAD提供全部资金并分享效率收益。您保留大部分收入，我们负责安装、维护和性能保证。"><strong>BROAD合作模式：</strong>零前期投资。BROAD提供全部资金并分享效率收益。您保留大部分收入，我们负责安装、维护和性能保证。</p>
+                </div>
+                
                 <div class="system-diagram">
-                    <h3 style="margin-bottom: 25px; color: #1e3c72; text-align: center; font-size: 1.5em;" 
-                        data-en="Waste Heat Recovery System" 
-                        data-zh="余热回收系统">余热回收系统</h3>
+                    <h3 class="diagram-title" data-en="Waste Heat Recovery System" data-zh="余热回收系统">余热回收系统</h3>
                     <div class="diagram-container">
-                        <!-- SVG for arrows -->
-                        <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 1;">
+                        <svg class="flow-svg" viewBox="0 0 1000 800">
                             <defs>
-                                <marker id="arrowhead-red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-                                    <polygon points="0 0, 12 6, 0 12" fill="#FF6B6B" />
-                                </marker>
-                                <marker id="arrowhead-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-                                    <polygon points="0 0, 12 6, 0 12" fill="#4E65FF" />
-                                </marker>
-                                <marker id="arrowhead-cyan" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-                                    <polygon points="0 0, 12 6, 0 12" fill="#56CCF2" />
+                                <marker id="arrow" markerWidth="20" markerHeight="20" refX="18" refY="10" orient="auto">
+                                    <polygon points="0 0, 20 10, 0 20" fill="rgba(0,0,0,0.4)" />
                                 </marker>
                             </defs>
                             
-                            <!-- Intake air to generator -->
-                            <path class="flow-arrow air-flow" d="M 190 170 L 190 250" marker-end="url(#arrowhead-cyan)" />
+                            <!-- Top to Left (intake to generator) -->
+                            <path class="flow-path" d="M 500 140 Q 250 200 180 400" marker-end="url(#arrow)" />
                             
-                            <!-- Generator to waste heat -->
-                            <path class="flow-arrow energy-flow" d="M 200 450 L 200 480" marker-end="url(#arrowhead-red)" />
+                            <!-- Left to Bottom (generator to waste heat) -->
+                            <path class="flow-path" d="M 180 460 Q 250 600 500 660" marker-end="url(#arrow)" />
                             
-                            <!-- Waste heat to chiller (curved) -->
-                            <path class="flow-arrow energy-flow" d="M 280 510 Q 500 550, 720 480" marker-end="url(#arrowhead-red)" />
+                            <!-- Bottom to Right (waste heat to chiller) -->
+                            <path class="flow-path" d="M 610 660 Q 750 600 820 460" marker-end="url(#arrow)" />
                             
-                            <!-- Chiller to intake cooling (curved) -->
-                            <path class="flow-arrow cooling-flow" d="M 820 200 Q 850 100, 290 100" marker-end="url(#arrowhead-blue)" />
+                            <!-- Right to Top (chiller to intake) -->
+                            <path class="flow-path" d="M 820 340 Q 750 200 500 140" marker-end="url(#arrow)" />
                         </svg>
 
-                        <!-- Intake Cooling Component -->
+                        <!-- TOP: Intake Air Cooling -->
                         <div class="component intake-cooling">
-                            <div class="component-label" data-en="INTAKE AIR COOLING" data-zh="进气冷却">进气冷却</div>
-                            <div class="intake-body">
-                                <div class="cold-waves">
-                                    <div class="wave"></div>
-                                    <div class="wave"></div>
-                                    <div class="wave"></div>
-                                </div>
-                                <div class="component-stats">
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="AMB" data-zh="环境">环境</span>
-                                        <span class="stat-value" id="diag-ambient-temp">35°C</span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="OUT" data-zh="输出">输出</span>
-                                        <span class="stat-value" id="diag-intake-temp">15°C</span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="ΔT" data-zh="温差">温差</span>
-                                        <span class="stat-value" id="diag-temp-reduction">20°C</span>
-                                    </div>
-                                </div>
+                            <div class="component-title" data-en="INTAKE AIR COOLING" data-zh="进气冷却">进气冷却</div>
+                            <div class="cooling-waves">
+                                <div class="cooling-wave"></div>
+                                <div class="cooling-wave"></div>
+                                <div class="cooling-wave"></div>
                             </div>
+                            <div class="component-label" data-en="AMBIENT" data-zh="环境">环境</div>
+                            <div class="component-value" id="diag-ambient">35°C</div>
+                            <div class="component-label" data-en="OUTPUT" data-zh="输出">输出</div>
+                            <div class="component-value" id="diag-intake">15°C</div>
                         </div>
 
-                        <!-- Generator Component -->
+                        <!-- LEFT: Generator -->
                         <div class="component generator">
-                            <div class="component-label" data-en="GAS TURBINE GENERATOR" data-zh="燃气轮机发电机">燃气轮机发电机</div>
-                            <div class="generator-body">
-                                <div class="generator-fan"></div>
-                                <div class="generator-indicator"></div>
-                                <div class="component-stats">
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="CAP" data-zh="容量">容量</span>
-                                        <span class="stat-value" id="diag-capacity">10 MW</span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="OUT" data-zh="输出">输出</span>
-                                        <span class="stat-value" id="diag-output">11.2 MW</span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="EXH" data-zh="排气">排气</span>
-                                        <span class="stat-value" id="diag-exhaust-temp">450°C</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="component-title" data-en="GAS TURBINE" data-zh="燃气轮机">燃气轮机<span class="status-indicator"></span></div>
+                            <div class="turbine-icon"></div>
+                            <div class="component-label" data-en="CAPACITY" data-zh="容量">容量</div>
+                            <div class="component-value" id="diag-capacity">10.0 MW</div>
+                            <div class="component-label" data-en="OUTPUT" data-zh="输出">输出</div>
+                            <div class="component-value" id="diag-output">11.2 MW</div>
                         </div>
 
-                        <!-- Waste Heat Component -->
+                        <!-- BOTTOM: Waste Heat -->
                         <div class="component waste-heat">
-                            <div class="component-label" data-en="WASTE HEAT RECOVERY" data-zh="废热回收">废热回收</div>
-                            <div class="waste-heat-body">
-                                <div class="heat-waves">
-                                    <div class="heat-particle"></div>
-                                    <div class="heat-particle"></div>
-                                    <div class="heat-particle"></div>
-                                    <div class="heat-particle"></div>
-                                </div>
-                                <div class="component-stats">
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="HEAT" data-zh="热量">热量</span>
-                                        <span class="stat-value" id="diag-heat-captured">2.5 MW<sub>th</sub></span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="EFF" data-zh="效率">效率</span>
-                                        <span class="stat-value">70%</span>
-                                    </div>
-                                </div>
+                            <div class="component-title" data-en="WASTE HEAT" data-zh="废热回收">废热回收</div>
+                            <div class="heat-particles">
+                                <div class="heat-particle"></div>
+                                <div class="heat-particle"></div>
+                                <div class="heat-particle"></div>
+                                <div class="heat-particle"></div>
                             </div>
+                            <div class="component-label" data-en="EXHAUST" data-zh="排气">排气</div>
+                            <div class="component-value">450°C</div>
+                            <div class="component-label" data-en="HEAT CAPTURED" data-zh="回收热量">回收热量</div>
+                            <div class="component-value" id="diag-heat">2.5 MW</div>
                         </div>
 
-                        <!-- Absorption Chiller Component -->
+                        <!-- RIGHT: Absorption Chiller -->
                         <div class="component absorption-chiller">
-                            <div class="component-label" data-en="ABSORPTION CHILLER" data-zh="吸收式制冷机">吸收式制冷机</div>
-                            <div class="chiller-body">
-                                <div class="chiller-coils">
-                                    <div class="coil-line"></div>
-                                    <div class="coil-line"></div>
-                                    <div class="coil-line"></div>
-                                    <div class="coil-line"></div>
-                                </div>
-                                <div class="chiller-indicator"></div>
-                                <div class="component-stats">
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="COOL" data-zh="制冷">制冷</span>
-                                        <span class="stat-value" id="diag-cooling-capacity">1,750 RT</span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label">COP</span>
-                                        <span class="stat-value">0.7</span>
-                                    </div>
-                                    <div class="stat-row">
-                                        <span class="stat-label" data-en="TYPE" data-zh="类型">类型</span>
-                                        <span class="stat-value">LiBr</span>
-                                    </div>
-                                </div>
+                            <div class="component-title" data-en="ABSORPTION CHILLER" data-zh="吸收式制冷机">吸收式制冷机<span class="status-indicator"></span></div>
+                            <div class="cooling-waves">
+                                <div class="cooling-wave"></div>
+                                <div class="cooling-wave"></div>
+                                <div class="cooling-wave"></div>
                             </div>
+                            <div class="component-label" data-en="COOLING" data-zh="制冷量">制冷量</div>
+                            <div class="component-value" id="diag-cooling">1,750 RT</div>
+                            <div class="component-label">COP</div>
+                            <div class="component-value">0.70</div>
                         </div>
 
-                        <!-- Efficiency badge -->
+                        <!-- CENTER: Efficiency Badge -->
                         <div class="efficiency-badge">
-                            <div class="efficiency-badge-title" data-en="POWER GAIN" data-zh="功率提升">功率提升</div>
-                            <div class="efficiency-badge-value" id="diag-power-gain">+12%</div>
+                            <div class="efficiency-title" data-en="POWER GAIN" data-zh="功率提升">功率提升</div>
+                            <div class="efficiency-value" id="diag-efficiency">+12%</div>
                         </div>
 
-                        <!-- Flow labels -->
-                        <div class="flow-label" style="top: 200px; left: 210px;">
-                            <div data-en="COLD AIR / 15°C" data-zh="冷空气 / 15°C">冷空气 / 15°C</div>
-                        </div>
-                        <div class="flow-label" style="top: 480px; left: 220px;">
-                            <div data-en="HOT EXHAUST / 450°C" data-zh="高温排气 / 450°C">高温排气 / 450°C</div>
-                        </div>
-                        <div class="flow-label" style="bottom: 70px; left: 43%;">
-                            <div data-en="WASTE HEAT → CHILLER" data-zh="废热 → 制冷机">废热 → 制冷机</div>
-                        </div>
-                        <div class="flow-label" style="top: 50px; right: 120px;">
-                            <div data-en="CHILLED WATER / 7°C" data-zh="冷冻水 / 7°C">冷冻水 / 7°C</div>
-                        </div>
-                    </div>
-
-                    <div class="legend">
-                        <div class="legend-item">
-                            <div class="legend-line" style="background: rgba(200,200,200,0.6);"></div>
-                            <span data-en="COOLED AIR FLOW" data-zh="冷空气流">冷空气流</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-line" style="background: rgba(255,100,100,0.6);"></div>
-                            <span data-en="WASTE HEAT FLOW" data-zh="废热流">废热流</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-line" style="background: rgba(100,200,255,0.6);"></div>
-                            <span data-en="COOLING WATER FLOW" data-zh="冷却水流">冷却水流</span>
-                        </div>
+                        <!-- Flow Labels -->
+                        <div class="flow-label" style="top: 180px; left: 30%;" data-en="↓ COLD AIR" data-zh="↓ 冷空气">↓ 冷空气</div>
+                        <div class="flow-label" style="bottom: 180px; left: 30%;" data-en="↓ HOT EXHAUST" data-zh="↓ 热排气">↓ 热排气</div>
+                        <div class="flow-label" style="bottom: 180px; right: 30%;" data-en="→ WASTE HEAT" data-zh="→ 废热">→ 废热</div>
+                        <div class="flow-label" style="top: 180px; right: 30%;" data-en="← COOLING" data-zh="← 冷却">← 冷却</div>
                     </div>
                 </div>
-                
+
                 <div id="results-content">
                     <div class="results-card">
-                        <h3>Simple Payback Period</h3>
+                        <h3 data-en="Simple Payback Period" data-zh="简单回收期">简单回收期</h3>
                         <div class="big-number" id="payback-period">--</div>
                         <div class="metric-grid">
                             <div class="metric">
-                                <div class="metric-label">Annual Savings</div>
+                                <div class="metric-label" data-en="Annual Savings" data-zh="年度节省">年度节省</div>
                                 <div class="metric-value" id="annual-savings">--</div>
                             </div>
                             <div class="metric">
-                                <div class="metric-label">ROI (Year 1)</div>
+                                <div class="metric-label" data-en="ROI (Year 1)" data-zh="投资回报率">投资回报率</div>
                                 <div class="metric-value" id="roi-year1">--</div>
                             </div>
                         </div>
@@ -1697,68 +1052,35 @@
 
                     <div class="details-table">
                         <div class="details-row">
-                            <span class="details-label">Power Gain</span>
+                            <span class="details-label" data-en="Power Gain" data-zh="功率增益">功率增益</span>
                             <span class="details-value" id="power-gain">--</span>
                         </div>
                         <div class="details-row">
-                            <span class="details-label">Additional kWh/year</span>
+                            <span class="details-label" data-en="Additional kWh/year" data-zh="年度增加电量">年度增加电量</span>
                             <span class="details-value" id="additional-kwh">--</span>
                         </div>
                         <div class="details-row">
-                            <span class="details-label">Revenue Increase</span>
+                            <span class="details-label" data-en="Revenue Increase" data-zh="收入增加">收入增加</span>
                             <span class="details-value" id="revenue-increase">--</span>
                         </div>
                         <div class="details-row">
-                            <span class="details-label">Total Investment</span>
+                            <span class="details-label" data-en="Total Investment" data-zh="总投资">总投资</span>
                             <span class="details-value" id="total-investment">--</span>
                         </div>
                         <div class="details-row">
-                            <span class="details-label">NPV (20 years)</span>
+                            <span class="details-label" data-en="NPV (20 years)" data-zh="净现值(20年)">净现值(20年)</span>
                             <span class="details-value" id="npv">--</span>
                         </div>
-                        <div class="details-row">
-                            <span class="details-label">IRR</span>
-                            <span class="details-value" id="irr">--</span>
-                        </div>
                     </div>
+                </div>
 
-                    <div id="detailed-results" class="hidden">
-                        <div class="chart-container">
-                            <h4 style="margin-bottom: 20px; color: #1e3c72;">Cumulative Cash Flow (20 Years)</h4>
-                            <div class="cash-flow-chart" id="cash-flow-chart"></div>
-                        </div>
-
-                        <div class="comparison-section">
-                            <h4>Key Performance Indicators</h4>
-                            <div class="bar-chart">
-                                <div class="bar-item">
-                                    <div class="bar-label">Efficiency Gain</div>
-                                    <div class="bar-visual" style="width: 100%;">
-                                        <div class="bar-value" id="efficiency-gain">--</div>
-                                    </div>
-                                </div>
-                                <div class="bar-item">
-                                    <div class="bar-label">Capacity Gain</div>
-                                    <div class="bar-visual" style="width: 85%;">
-                                        <div class="bar-value" id="capacity-gain">--</div>
-                                    </div>
-                                </div>
-                                <div class="bar-item">
-                                    <div class="bar-label">CO₂ Reduction</div>
-                                    <div class="bar-visual" style="width: 70%;">
-                                        <div class="bar-value" id="co2-reduction">--</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="comparison-results" class="hidden">
-                        <div class="chart-container">
-                            <h4 style="margin-bottom: 20px; color: #1e3c72;">Scenario Comparison</h4>
-                            <div id="comparison-chart"></div>
-                        </div>
-                    </div>
+                <div class="cta-section">
+                    <h3 data-en="Ready to Increase Your Power Output?" data-zh="准备提升您的发电输出？">准备提升您的发电输出？</h3>
+                    <p data-en="Join leading power generators worldwide who partner with BROAD to unlock hidden capacity in their plants. Our absorption chiller technology has delivered proven results with zero upfront investment required." data-zh="加入全球领先的发电企业，与BROAD合作释放电厂潜能。我们的吸收式制冷技术已取得实证成果，无需前期投资。">加入全球领先的发电企业，与BROAD合作释放电厂潜能。我们的吸收式制冷技术已取得实证成果，无需前期投资。</p>
+                    <button class="cta-button" onclick="window.location.href='mailto:partnership@broad.com?subject=Energy Performance Partnership Inquiry'" 
+                            data-en="Contact Partnership Team" data-zh="联系合作团队">联系合作团队</button>
+                    <button class="cta-button secondary" onclick="window.open('https://www.broad.com', '_blank')" 
+                            data-en="Learn More About BROAD" data-zh="了解更多关于BROAD">了解更多关于BROAD</button>
                 </div>
             </div>
         </div>
@@ -1766,57 +1088,70 @@
 
     <script>
         let currentMode = 'simple';
-        let currentScenario = 1;
+        let currentLanguage = 'zh';
 
         function switchMode(mode) {
             currentMode = mode;
             
-            // Update button states
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Show/hide input sections
             document.getElementById('simple-inputs').classList.toggle('hidden', mode !== 'simple');
             document.getElementById('detailed-inputs').classList.toggle('hidden', mode !== 'detailed');
-            document.getElementById('comparison-inputs').classList.toggle('hidden', mode !== 'comparison');
-            
-            // Show/hide result sections
-            document.getElementById('detailed-results').classList.toggle('hidden', mode !== 'detailed');
-            document.getElementById('comparison-results').classList.toggle('hidden', mode !== 'comparison');
         }
 
-        function switchScenario(num) {
-            currentScenario = num;
-            document.querySelectorAll('.scenario-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+            setLanguage(currentLanguage);
             
-            for (let i = 1; i <= 3; i++) {
-                document.getElementById(`scenario-${i}`).classList.toggle('hidden', i !== num);
+            const toggleSwitch = document.querySelector('.toggle-switch');
+            if (currentLanguage === 'en') {
+                toggleSwitch.classList.add('active');
+            } else {
+                toggleSwitch.classList.remove('active');
+            }
+        }
+
+        function setLanguage(lang) {
+            document.querySelectorAll('[data-en][data-zh]').forEach(element => {
+                if (element.children.length > 0) {
+                    const hasDataChildren = Array.from(element.children).some(
+                        child => child.hasAttribute('data-en') || child.hasAttribute('data-zh')
+                    );
+                    if (hasDataChildren) return;
+                }
+                
+                if (element.tagName === 'OPTION') {
+                    element.textContent = lang === 'en' ? element.getAttribute('data-en') : element.getAttribute('data-zh');
+                } else if (!element.querySelector('[data-en]')) {
+                    const text = lang === 'en' ? element.getAttribute('data-en') : element.getAttribute('data-zh');
+                    if (element.innerHTML.includes('<strong>')) {
+                        element.innerHTML = text;
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+
+            const toggleSwitch = document.querySelector('.toggle-switch');
+            if (lang === 'en') {
+                toggleSwitch.classList.add('active');
+            } else {
+                toggleSwitch.classList.remove('active');
             }
         }
 
         function calculate() {
-            if (currentMode === 'simple') {
-                calculateSimple();
-            } else if (currentMode === 'detailed') {
-                calculateDetailed();
-            } else {
-                calculateComparison();
-            }
-        }
-
-        function calculateSimple() {
             const capacity = parseFloat(document.getElementById('capacity').value);
             const climate = document.getElementById('climate').value;
             const hours = parseFloat(document.getElementById('operating-hours').value);
             const price = parseFloat(document.getElementById('electricity-price').value);
 
-            // Climate-based assumptions
             const climateParams = {
-                'hot-humid': { tempReduction: 20, powerGainRate: 0.65 },
-                'hot-dry': { tempReduction: 22, powerGainRate: 0.70 },
-                'temperate': { tempReduction: 15, powerGainRate: 0.55 },
-                'cold': { tempReduction: 12, powerGainRate: 0.50 }
+                'hot-humid': { tempReduction: 20, powerGainRate: 0.85 },
+                'hot-dry': { tempReduction: 25, powerGainRate: 0.88 },
+                'temperate': { tempReduction: 18, powerGainRate: 0.75 },
+                'cold': { tempReduction: 15, powerGainRate: 0.65 }
             };
 
             const params = climateParams[climate];
@@ -1825,14 +1160,13 @@
             const additionalKWh = powerGainMW * 1000 * hours;
             const annualSavings = additionalKWh * price;
 
-            // Estimate capital cost
-            const coolingCapacityTons = powerGainMW * 1000 * 0.5; // Rough estimate
-            const capitalCost = coolingCapacityTons * 800 * 3.517; // $/kW to $/ton conversion
+            const coolingCapacityTons = powerGainMW * 1000 * 0.5;
+            const capitalCost = coolingCapacityTons * 800 * 3.517;
 
             const paybackYears = capitalCost / annualSavings;
             const roi = (annualSavings / capitalCost) * 100;
+            const npv = calculateNPV(annualSavings, capitalCost, 8, 20, 2);
 
-            // Update results
             document.getElementById('payback-period').textContent = paybackYears.toFixed(1) + ' years';
             document.getElementById('annual-savings').textContent = '$' + (annualSavings / 1000).toFixed(0) + 'K';
             document.getElementById('roi-year1').textContent = roi.toFixed(1) + '%';
@@ -1840,118 +1174,13 @@
             document.getElementById('additional-kwh').textContent = (additionalKWh / 1000000).toFixed(2) + ' GWh';
             document.getElementById('revenue-increase').textContent = '$' + (annualSavings / 1000000).toFixed(2) + 'M';
             document.getElementById('total-investment').textContent = '$' + (capitalCost / 1000000).toFixed(2) + 'M';
-
-            // Calculate NPV
-            const npv = calculateNPV(annualSavings, capitalCost, 8, 20, 2);
             document.getElementById('npv').textContent = '$' + (npv / 1000000).toFixed(2) + 'M';
 
-            // Calculate IRR (approximate)
-            const irr = calculateIRR(capitalCost, annualSavings, 20);
-            document.getElementById('irr').textContent = irr.toFixed(1) + '%';
-
-            // Update diagram
-            updateDiagram(35, 15, capacity, powerGainMW, 450, powerGainPercent, coolingCapacityTons);
-        }
-
-        function calculateDetailed() {
-            const capacity = parseFloat(document.getElementById('capacity-detail').value);
-            const ambientTemp = parseFloat(document.getElementById('ambient-temp').value);
-            const targetTemp = parseFloat(document.getElementById('target-temp').value);
-            const powerGainRate = parseFloat(document.getElementById('power-gain-rate').value);
-            const hours = parseFloat(document.getElementById('operating-hours-detail').value);
-            const capacityFactor = parseFloat(document.getElementById('capacity-factor').value) / 100;
-            const price = parseFloat(document.getElementById('electricity-price-detail').value);
-            const priceEscalation = parseFloat(document.getElementById('price-escalation').value) / 100;
-            const capitalCostPerKW = parseFloat(document.getElementById('capital-cost').value);
-            const omCostPercent = parseFloat(document.getElementById('om-cost').value) / 100;
-            const discountRate = parseFloat(document.getElementById('discount-rate').value) / 100;
-            const analysisPeriod = parseInt(document.getElementById('analysis-period').value);
-            const incentives = parseFloat(document.getElementById('incentives').value);
-
-            const tempReduction = ambientTemp - targetTemp;
-            const powerGainPercent = tempReduction * powerGainRate;
-            const powerGainMW = capacity * (powerGainPercent / 100) * capacityFactor;
-            const additionalKWh = powerGainMW * 1000 * hours;
-            const annualSavings = additionalKWh * price;
-
-            // Calculate cooling capacity needed
-            const coolingCapacityKW = powerGainMW * 1000 * 1.2; // Factor for intake cooling
-            const capitalCost = coolingCapacityKW * capitalCostPerKW - incentives;
-            const annualOMCost = capitalCost * omCostPercent;
-
-            const netAnnualSavings = annualSavings - annualOMCost;
-            const paybackYears = capitalCost / netAnnualSavings;
-            const roi = (netAnnualSavings / capitalCost) * 100;
-
-            // Calculate NPV with escalation
-            let npv = -capitalCost;
-            for (let year = 1; year <= analysisPeriod; year++) {
-                const yearlyPrice = price * Math.pow(1 + priceEscalation, year - 1);
-                const yearlySavings = additionalKWh * yearlyPrice - annualOMCost;
-                npv += yearlySavings / Math.pow(1 + discountRate, year);
-            }
-
-            const irr = calculateIRR(capitalCost, netAnnualSavings, analysisPeriod);
-
-            // Update results
-            document.getElementById('payback-period').textContent = paybackYears.toFixed(1) + ' years';
-            document.getElementById('annual-savings').textContent = '$' + (netAnnualSavings / 1000).toFixed(0) + 'K';
-            document.getElementById('roi-year1').textContent = roi.toFixed(1) + '%';
-            document.getElementById('power-gain').textContent = powerGainMW.toFixed(2) + ' MW';
-            document.getElementById('additional-kwh').textContent = (additionalKWh / 1000000).toFixed(2) + ' GWh';
-            document.getElementById('revenue-increase').textContent = '$' + (annualSavings / 1000000).toFixed(2) + 'M';
-            document.getElementById('total-investment').textContent = '$' + (capitalCost / 1000000).toFixed(2) + 'M';
-            document.getElementById('npv').textContent = '$' + (npv / 1000000).toFixed(2) + 'M';
-            document.getElementById('irr').textContent = irr.toFixed(1) + '%';
-
-            // Update KPIs
-            document.getElementById('efficiency-gain').textContent = powerGainPercent.toFixed(2) + '%';
-            document.getElementById('capacity-gain').textContent = powerGainMW.toFixed(2) + ' MW';
-            
-            // CO2 reduction (assume 0.5 kg CO2/kWh)
-            const co2Reduction = (additionalKWh * 0.5) / 1000; // metric tons
-            document.getElementById('co2-reduction').textContent = co2Reduction.toFixed(0) + ' tons/yr';
-
-            // Generate cash flow chart
-            generateCashFlowChart(capitalCost, netAnnualSavings, analysisPeriod, discountRate, priceEscalation, price, additionalKWh, annualOMCost);
-
-            // Update diagram
-            const coolingCapacityTons = coolingCapacityKW * 0.284345; // kW to tons
-            updateDiagram(ambientTemp, targetTemp, capacity, powerGainMW, 
-                         parseFloat(document.getElementById('exhaust-temp').value), 
-                         powerGainPercent, coolingCapacityTons);
-        }
-
-        function calculateComparison() {
-            const scenarios = [];
-            const basePrice = 0.12;
-            const baseHours = 7000;
-
-            for (let i = 1; i <= 3; i++) {
-                const capacity = parseFloat(document.getElementById(`scenario-${i}-capacity`).value);
-                const tempReduction = parseFloat(document.getElementById(`scenario-${i}-temp-reduction`).value);
-                const capex = parseFloat(document.getElementById(`scenario-${i}-capex`).value) * 1000000;
-                const name = document.getElementById(`scenario-${i}-name`).value;
-
-                const powerGainPercent = tempReduction * 0.6;
-                const powerGainMW = capacity * (powerGainPercent / 100);
-                const additionalKWh = powerGainMW * 1000 * baseHours;
-                const annualSavings = additionalKWh * basePrice;
-                const payback = capex / annualSavings;
-                const npv = calculateNPV(annualSavings, capex, 8, 20, 2);
-                const irr = calculateIRR(capex, annualSavings, 20);
-
-                scenarios.push({
-                    name,
-                    payback: payback.toFixed(1),
-                    annualSavings: (annualSavings / 1000000).toFixed(2),
-                    npv: (npv / 1000000).toFixed(2),
-                    irr: irr.toFixed(1),
-                    powerGain: powerGainMW.toFixed(2)
-                });
-            }
-
-            generateComparisonChart(scenarios);
+            document.getElementById('diag-capacity').textContent = capacity.toFixed(1) + ' MW';
+            document.getElementById('diag-output').textContent = (capacity + powerGainMW).toFixed(1) + ' MW';
+            document.getElementById('diag-cooling').textContent = coolingCapacityTons.toFixed(0) + ' RT';
+            document.getElementById('diag-efficiency').textContent = '+' + powerGainPercent.toFixed(1) + '%';
+            document.getElementById('diag-heat').textContent = (powerGainMW * 2.5).toFixed(1) + ' MW';
         }
 
         function calculateNPV(annualCashFlow, initialInvestment, discountRate, years, escalation) {
@@ -1967,236 +1196,10 @@
             return npv;
         }
 
-        function calculateIRR(investment, annualCashFlow, years) {
-            // Simple IRR approximation using NPV = 0
-            let irr = 0.1; // Start with 10%
-            let npv = 0;
-            let iteration = 0;
-            
-            while (Math.abs(npv) > 100 && iteration < 100) {
-                npv = -investment;
-                for (let year = 1; year <= years; year++) {
-                    npv += annualCashFlow / Math.pow(1 + irr, year);
-                }
-                
-                if (npv > 0) {
-                    irr += 0.01;
-                } else {
-                    irr -= 0.005;
-                }
-                iteration++;
-            }
-            
-            return irr * 100;
-        }
-
-        function generateCashFlowChart(initialInvestment, annualCashFlow, years, discountRate, escalation, basePrice, kwhPerYear, omCost) {
-            const container = document.getElementById('cash-flow-chart');
-            let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
-            
-            let cumulativeCashFlow = -initialInvestment;
-            const chartHeight = 200;
-            const maxValue = annualCashFlow * years;
-            
-            // Year 0
-            const bar0Height = Math.abs(initialInvestment) / maxValue * chartHeight;
-            html += `
-                <div style="display: flex; align-items: flex-end; gap: 10px; height: ${chartHeight + 40}px;">
-                    <div style="min-width: 40px; font-size: 0.85em; font-weight: 600;">Year 0</div>
-                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
-                        <div style="background: #f44336; height: ${bar0Height}px; border-radius: 4px; position: relative;">
-                            <span style="position: absolute; top: -25px; right: 5px; font-size: 0.8em; font-weight: 600; color: #f44336;">
-                                -$${(initialInvestment / 1000000).toFixed(1)}M
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // Subsequent years (show every 5 years)
-            for (let year = 5; year <= years; year += 5) {
-                const yearlyPrice = basePrice * Math.pow(1 + escalation, year - 1);
-                const yearlySavings = kwhPerYear * yearlyPrice - omCost;
-                
-                for (let y = year - 4; y <= year; y++) {
-                    const yPrice = basePrice * Math.pow(1 + escalation, y - 1);
-                    const ySavings = kwhPerYear * yPrice - omCost;
-                    cumulativeCashFlow += ySavings / Math.pow(1 + discountRate, y);
-                }
-                
-                const barHeight = Math.abs(cumulativeCashFlow) / maxValue * chartHeight;
-                const color = cumulativeCashFlow >= 0 ? '#4CAF50' : '#f44336';
-                
-                html += `
-                    <div style="display: flex; align-items: flex-end; gap: 10px; height: ${chartHeight + 40}px;">
-                        <div style="min-width: 40px; font-size: 0.85em; font-weight: 600;">Year ${year}</div>
-                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
-                            <div style="background: ${color}; height: ${barHeight}px; border-radius: 4px; position: relative;">
-                                <span style="position: absolute; top: -25px; right: 5px; font-size: 0.8em; font-weight: 600; color: ${color};">
-                                    ${cumulativeCashFlow >= 0 ? '+' : ''}$${(cumulativeCashFlow / 1000000).toFixed(1)}M
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        function generateComparisonChart(scenarios) {
-            const container = document.getElementById('comparison-chart');
-            let html = '<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">';
-            
-            scenarios.forEach(scenario => {
-                html += `
-                    <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #e0e0e0;">
-                        <h4 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.1em;">${scenario.name}</h4>
-                        <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <div>
-                                <div style="font-size: 0.85em; color: #666;">Payback Period</div>
-                                <div style="font-size: 1.8em; font-weight: 700; color: #667eea;">${scenario.payback} years</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.85em; color: #666;">Annual Savings</div>
-                                <div style="font-size: 1.3em; font-weight: 600;">$${scenario.annualSavings}M</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.85em; color: #666;">NPV (20 years)</div>
-                                <div style="font-size: 1.3em; font-weight: 600;">$${scenario.npv}M</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.85em; color: #666;">IRR</div>
-                                <div style="font-size: 1.3em; font-weight: 600;">${scenario.irr}%</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.85em; color: #666;">Power Gain</div>
-                                <div style="font-size: 1.3em; font-weight: 600;">${scenario.powerGain} MW</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        function updateDiagram(ambientTemp, intakeTemp, capacity, outputMW, exhaustTemp, powerGainPercent, coolingTons) {
-            document.getElementById('diag-ambient-temp').textContent = ambientTemp.toFixed(0) + '°C';
-            document.getElementById('diag-intake-temp').textContent = intakeTemp.toFixed(0) + '°C';
-            document.getElementById('diag-temp-reduction').textContent = (ambientTemp - intakeTemp).toFixed(0) + '°C';
-            document.getElementById('diag-capacity').textContent = capacity.toFixed(1) + ' MW';
-            document.getElementById('diag-output').textContent = (capacity + outputMW).toFixed(1) + ' MW';
-            document.getElementById('diag-exhaust-temp').textContent = exhaustTemp.toFixed(0) + '°C';
-            
-            // Estimate heat captured (roughly 30-40% of fuel input can be recovered)
-            const heatCaptured = outputMW * 2.5; // Rough estimate
-            document.getElementById('diag-heat-captured').textContent = heatCaptured.toFixed(1) + ' MW';
-            
-            document.getElementById('diag-cooling-capacity').textContent = coolingTons.toFixed(0) + ' tons';
-            document.getElementById('diag-power-gain').textContent = '+' + powerGainPercent.toFixed(1) + '%';
-        }
-
-        // Initialize with simple mode calculation
         window.onload = function() {
             calculate();
-            setLanguage('zh'); // Default to Chinese
-            updateDiagramForScreenSize();
+            setLanguage('zh');
         };
-
-        // Update diagram arrows for screen size
-        function updateDiagramForScreenSize() {
-            const isMobile = window.innerWidth <= 768;
-            
-            if (isMobile) {
-                // Update SVG paths for vertical mobile layout
-                document.querySelector('.air-flow').setAttribute('d', 'M 50% 150 L 50% 220');
-                document.querySelector('.energy-flow').setAttribute('d', 'M 50% 400 L 50% 440');
-                
-                // Reposition flow labels for mobile
-                const flowLabels = document.querySelectorAll('.flow-label');
-                if (flowLabels.length >= 4) {
-                    flowLabels[0].style.top = '180px';
-                    flowLabels[0].style.left = '55%';
-                    
-                    flowLabels[1].style.top = '410px';
-                    flowLabels[1].style.left = '55%';
-                    
-                    flowLabels[2].style.bottom = 'auto';
-                    flowLabels[2].style.top = '560px';
-                    flowLabels[2].style.left = '50%';
-                    flowLabels[2].style.transform = 'translateX(-50%)';
-                    
-                    flowLabels[3].style.top = '160px';
-                    flowLabels[3].style.right = 'auto';
-                    flowLabels[3].style.left = '50%';
-                    flowLabels[3].style.transform = 'translateX(-50%)';
-                }
-            }
-        }
-
-        // Re-run on window resize
-        window.addEventListener('resize', updateDiagramForScreenSize);
-
-        let currentLanguage = 'zh';
-
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
-            setLanguage(currentLanguage);
-            
-            // Toggle switch animation
-            const toggleSwitch = document.querySelector('.toggle-switch');
-            if (currentLanguage === 'en') {
-                toggleSwitch.classList.add('active');
-            } else {
-                toggleSwitch.classList.remove('active');
-            }
-        }
-
-        function setLanguage(lang) {
-            // Update all elements with data-en and data-zh attributes
-            document.querySelectorAll('[data-en][data-zh]').forEach(element => {
-                // Skip elements that have children with data attributes (to preserve structure)
-                if (element.children.length > 0) {
-                    // For elements like labels in diagram that contain other elements
-                    const hasDataChildren = Array.from(element.children).some(
-                        child => child.hasAttribute('data-en') || child.hasAttribute('data-zh')
-                    );
-                    if (hasDataChildren) return;
-                }
-                
-                // Handle select options
-                if (element.tagName === 'OPTION') {
-                    element.textContent = lang === 'en' ? element.getAttribute('data-en') : element.getAttribute('data-zh');
-                }
-                // Handle regular elements
-                else if (!element.querySelector('[data-en]')) {
-                    // Only update if there are no nested translatable elements
-                    const text = lang === 'en' ? element.getAttribute('data-en') : element.getAttribute('data-zh');
-                    // Preserve HTML structure for elements with <br> or <strong> tags
-                    if (element.innerHTML.includes('<br>') || element.innerHTML.includes('<strong>')) {
-                        const parts = text.split('\n');
-                        if (parts.length > 1 && element.innerHTML.includes('<br>')) {
-                            element.innerHTML = parts.join('<br>');
-                        } else {
-                            element.textContent = text;
-                        }
-                    } else {
-                        element.textContent = text;
-                    }
-                }
-            });
-
-            // Update toggle switch
-            const toggleSwitch = document.querySelector('.toggle-switch');
-            if (lang === 'en') {
-                toggleSwitch.classList.add('active');
-            } else {
-                toggleSwitch.classList.remove('active');
-            }
-        }
     </script>
 </body>
 </html>
